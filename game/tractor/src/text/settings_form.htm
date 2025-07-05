@@ -1,0 +1,187 @@
+<style>
+    .settingsroot * {
+        position: static !important;
+    }
+
+    .settingsroot {
+        overflow: auto;
+        padding-left: 2em;
+        padding-right: 2em;
+        background: #eceeee;
+        border: 1px solid #42464b;
+        border-radius: 6px;
+        margin: 20px auto 0;
+        max-height: 400px;
+    }
+
+    .ShengbiLeadingBoard {
+        background: #c0cad1dd;
+        overflow: auto;
+    }
+
+    h2 {
+        text-align: center
+    }
+</style>
+
+<div id="input-form" class="settingsroot">
+    <h2>游戏规则</h2>
+    <ul>
+        <li>如果无人亮主，则打无主</li>
+        <li>甩牌失败，将会以每张10分进行罚分</li>
+    </ul>
+
+    <h2>信号机制</h2>
+    <ul>
+        <li>一方出A，同伴出8、9、J、Q代表有另一张A</li>
+        <li>使用常主调主表示寻求对家帮忙清主</li>
+    </ul>
+
+    <div id="divRoomSettingsWrapper" style="display: none;">
+        <h2>房间设置</h2>
+        <div id="divRoomSettings" style="display: none;">
+            <p><input type="button" id="btnResumeGame" value="继续上盘牌局" /></p>
+            <p><input type="button" id="btnRandomSeat" value="随机组队" /></p>
+            <p>
+                <select id="selectSwapSeat">
+                    <option value="1">下家</option>
+                    <option value="2">对家</option>
+                    <option value="3">上家</option>
+                </select>
+                <input type="button" id="btnSwapSeat" value="互换座位" />
+            </p>
+        </div>
+        <p><input type="checkbox" id="cbxNoOverridingFlag" /><label for="cbxNoOverridingFlag">关闭大牌语音及画面提示</label></p>
+        <p><input type="checkbox" id="cbxNoSignalCard" /><label for="cbxNoSignalCard">不打信号牌</label></p>
+        <p>
+            <label>出牌时限</label>
+            <select id="selectSecondsToShowCards">
+                <option value="0">不限制</option>
+                <option value="10">10秒</option>
+                <option value="20">20秒</option>
+                <option value="30">30秒</option>
+                <option value="40">40秒</option>
+                <option value="50">60秒</option>
+                <option value="60">60秒</option>
+                <option value="90">90秒</option>
+            </select>
+        </p>
+        <p>
+            <label>埋底时限</label>
+            <select id="selectSecondsToDiscardCards">
+                <option value="0">不限制</option>
+                <option value="30">30秒</option>
+                <option value="60">60秒</option>
+                <option value="90">90秒</option>
+                <option value="120">120秒</option>
+            </select>
+        </p>
+    </div>
+    <h2>本地设置</h2>
+    <p id="pNoDongtu" style="display: none;">
+        <input type="checkbox" id="cbxNoDongtu" /><label for="cbxNoDongtu">关闭动图（免费开放，时效1天）</label>
+        <br />
+        <label id="lblNoDongtuUntilExpDate" style="display: none;" />
+    </p>
+    <p><input type="checkbox" id="cbxUseCardUIStyleClassic" /><label
+            for="cbxUseCardUIStyleClassic">启用经典卡牌风格（需重启游戏生效）</label></p>
+    <p><input type="checkbox" id="cbxNoDanmu" /><label for="cbxNoDanmu">关闭弹幕</label></p>
+    <p><input type="checkbox" id="cbxCutCards" /><label for="cbxCutCards">关闭切牌</label></p>
+    <p><input type="checkbox" id="cbxYesDragSelect" /><label for="cbxYesDragSelect">开启拖拽选牌</label></p>
+    <p><input type="checkbox" id="cbxOnlyMeShowCardCancelLastTrickView" /><label
+            for="cbxOnlyMeShowCardCancelLastTrickView">仅自己出牌时才自动退出上轮回看模式</label></p>
+    <p>
+        <input type="checkbox" id="cbxNoTouchDevice" /><label for="cbxNoTouchDevice">关闭自动触屏检测机制</label>
+        <br />
+        <label id="lblNoTouchDeviceDesc">不勾选此选项，并配合【开启拖拽选牌】选项方能在触屏设备上实现拖拽选牌功能</label>
+    </p>
+    <p><input type="checkbox" id="cbxHidePlayerID" /><label for="cbxHidePlayerID">隐藏玩家ID（需重启游戏生效）</label></p>
+    <p>
+        当前录像个数：<span id="divReplayCount"></span><br />
+        <label for="txtMaxReplays">录像个数上限：</label><input type="text" id="txtMaxReplays" value="1000" />
+    </p>
+    <p><input type="button" id="btnCleanupReplays" value="清空所有录像" /></p>
+    <p><input type="button" id="btnExportZipFile" value="导出所有录像至本地文件" /></p>
+    <p><label for="inputRecordingFile">导入本地录像文件（仅支持zip/json格式）：</label></p>
+    <p><input type="file" id="inputRecordingFile" accept=".zip,.json" /></p>
+    <p><input type="button" id="btnCleanupLocalResources" value="清空缓存资源并刷新" /> <label
+            for="btnCleanupLocalResources">包括卡牌资源、皮肤资源等</label></p>
+
+    <div id="divDaojuWrapper" style="display: none;">
+        <h2>游戏道具</h2>
+        <p>
+            <b>升币</b><br />
+            余额：<label id="lblShengbi"></label><br />
+            获取方式：<br />
+        <ul>
+            <li>每日签到+10</li>
+            <li>每盘游戏按照【获胜级数】x1奖励</li>
+            <li>完成一局游戏+5</li>
+            <li>完成一局游戏且获胜再额外+5</li>
+        </ul>
+
+        <input type="button" id="btnShengbiLeadingBoard" value="富豪榜" /><br />
+        <p>
+        <div id="divShengbiLeadingBoard" class="ShengbiLeadingBoard"></div>
+        </p>
+        </p>
+
+        <p>
+            <b>抢亮卡</b><br />
+            自动亮牌道具。每次使用消耗【升币】x10<br />
+            激活方式：在升币余额足够的条件下，发牌时开启托管即可<br />
+            道具效果：<br />
+        <ul>
+            <li>在满足亮牌条件时自动亮牌</li>
+            <li>在抢庄时直接亮</li>
+            <li>不抢庄时达到x张时亮（x为抢亮下限设置值）</li>
+            <li>不触发亮无主</li>
+            <li>若未因此道具触发过亮牌则不扣除升币</li>
+        </ul>
+        <label>抢亮下限：</label>
+        <select id="selectQiangliangMin">
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select>
+        </p>
+
+        <p>
+            <b>广播卡</b><br />
+            向所有在线玩家广播消息。每次使用消耗【升币】x10<br />
+            使用方式：在聊天消息中添加前缀“@all”即可<br />
+        </p>
+
+        <p>
+            <b>皮肤</b><br />
+            游戏界面装饰道具。<br />
+            <label>皮肤列表：</label>
+            <select id="selectFullSkinInfo"></select><br />
+            皮肤性别：<label id="lblSkinSex"></label><br />
+            皮肤类型：<label id="lblSkinType"></label>（动态皮肤可通过点它来关闭动画）<br />
+            皮肤价格：<label id="lblSkinCost"></label><br />
+            皮肤撞衫人数：<label id="lblSkinOnwers"></label><br />
+            皮肤拥有状态：<label id="lblSkinIsOwned"></label><br />
+        <p><input type="button" id="btnBuyOrUseSelectedSkin" /></p>
+        </p>
+    </div>
+
+    <h2>游戏操作</h2>
+    <ul>
+        <li>快捷键【Z】：开始</li>
+        <li>快捷键【R】：托管</li>
+        <li>快捷键【Q】：抢亮</li>
+        <li>快捷键【S】：出牌</li>
+        <li>快捷键【ESCAPE】：离开聊天输入框、保存并关闭设置窗口、取消切牌</li>
+        <li>拖拽鼠标：先择多张牌</li>
+        <li>鼠标右键点击牌：向左选择多张合理的牌</li>
+        <li>鼠标右键点击屏幕空白处：回看上轮出牌</li>
+        <li>录像回放，第一视角：0 键</li>
+        <li>录像回放，第一轮：↑ 上箭头</li>
+        <li>录像回放，上一轮：← 左箭头</li>
+        <li>录像回放，下一轮：→ 右箭头</li>
+        <li>录像回放，最末轮：↓ 下箭头</li>
+    </ul>
+</div>

@@ -1,0 +1,70 @@
+<style>
+    .replay-formroot * {
+        position: relative;
+        font-family: serif;
+    }
+
+    .replay-formroot {
+        position: relative;
+        overflow: auto;
+        padding-top: 0.25em;
+        padding-bottom: 0.5em;
+        font-size: 0.75em;
+        color: white;
+    }
+
+    input {
+        font-size: 1em;
+    }
+
+    select {
+        margin-left: 0.5em;
+        margin-bottom: 0.25em;
+    }
+
+    #divReplayButtonsWrapper {
+        display: block;
+        bottom: 1%;
+        width: 100%;
+        text-align: center;
+        position: unset;
+    }
+
+    .replayButtonsClass {
+        font-size: 20px;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .replayButtonsClass1 {
+        bottom: 1%;
+    }
+
+    .replayButtonsClass2 {
+        bottom: calc(1% + 40px);
+    }
+
+    .replayButtonsClass3 {
+        bottom: calc(1% + 80px);
+    }
+
+    .replayButtonsClass4 {
+        bottom: calc(1% + 120px);
+    }
+
+    .replayButtonsClass5 {
+        bottom: calc(1% + 160px);
+    }
+</style>
+<div id="input-form" class="replay-formroot">
+    <label for="selectDates">录像日期</label>
+    <br />
+    <select id="selectDates"></select>
+    <br />
+    <label for="selectTimes">录像文件</label>
+    <br />
+    <select id="selectTimes"></select>
+    <br />
+    <input type="button" id="btnLoadReplay" value="确定" />
+</div>

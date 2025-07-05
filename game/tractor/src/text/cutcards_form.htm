@@ -1,0 +1,45 @@
+<style>
+    .cutcards-formroot {
+        padding-left: 2em;
+        padding-right: 2em;
+        background: #eceeee;
+        border: 1px solid #42464b;
+        border-radius: 6px;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    h2 {
+        text-align: center
+    }
+
+    input {
+        width: 70px;
+    }
+
+    .col2 {
+        margin-left: 10px;
+    }
+
+    .textbox {
+        box-sizing: border-box;
+    }
+</style>
+<div id="input-form" class="cutcards-formroot">
+    <h2>选择切牌</h2>
+    <p id="pRow0">
+        <input type="button" id="btnRandom" value="随机" />
+        <input class="col2" type="button" id="btnCancel" value="取消" />
+    </p>
+    <p id="pRow1">
+        <input type="button" id="btnBapi1" value="扒皮1张" />
+        <input class="col2" type="button" id="btnBapi3" value="扒皮3张" />
+    </p>
+    <p id="pRow2">
+        <input class="textbox" type="text" id="txtManual" value="0" />
+        <input class="col2" type="button" id="btnManual" value="手动" />
+    </p>
+</div>
